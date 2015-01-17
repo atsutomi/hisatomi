@@ -1,0 +1,4 @@
+<div id="logo">べんとーべん</div>
+<%= link_to "TOP", root_path %>
+<div id="tel">0449666789</div>
+<div id="address">神奈川県川崎市</div>

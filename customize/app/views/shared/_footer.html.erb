@@ -1,0 +1,8 @@
+<div id="logo">べんとーべん</div>
+<% if controller.kind_of?(Admin::Base) %>
+  <%= link_to "TOP", :admin_root %>
+<% else %>
+  <%= link_to "TOP", root_path %>
+<% end %>
+<div id="tel">0449666789</div>
+<div id="address">神奈川県川崎市</div>

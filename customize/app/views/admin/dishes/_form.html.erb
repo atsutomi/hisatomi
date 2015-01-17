@@ -1,0 +1,35 @@
+<% options = ["staple", "main", "sub"] %>
+<table class="attr">
+<%= form.fields_for :image do |imgf| %>
+  <tr>
+    <th><%= imgf.label :uploaded_image %></th>
+    <td>
+      <%= imgf.file_field :uploaded_image %>
+    </td>
+  </tr>
+<% end %>
+  <tr>
+    <th><%= form.label :name %></th>
+    <td><%= form.text_field :name %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :yen %></th>
+    <td><%= form.text_field :yen %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :kcal %></th>
+    <td><%= form.text_field :kcal %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :genra %></th>
+    <td><%= form.text_field :genra %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :category %></th>
+    <td><%= form.select :category, options %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :visible %></th>
+    <td><%= form.check_box :visible %></td>
+  </tr>
+</table>

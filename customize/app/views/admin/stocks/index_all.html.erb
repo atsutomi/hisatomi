@@ -1,0 +1,14 @@
+<h1>在庫管理</h1>
+<% if @stocks.present? %>
+<%= link_to "在庫量の少ない料理を確認する", action: :index %>
+<table class="list">
+  <tr>
+    <th>日付</th>
+  </tr>
+  <% @stocks.each do |stock| %>
+  <tr>
+    <td><%= link_to stock.date.to_date.try(:strftime, "%Y年 %m月 %d日") , :action => :show_date , :name => stock.date %></td>
+  </tr>
+  <% end %>
+</table>
+<% end %>

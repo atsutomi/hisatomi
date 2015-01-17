@@ -1,0 +1,6 @@
+<h1>料理の編集</h1>
+<p><%= link_to "料理詳細に戻る", @dish %></p>
+<%= form_for @dish do |form| %>
+<%= render "form", form: form %>
+<p><%= form.submit %></p>
+<% end %>

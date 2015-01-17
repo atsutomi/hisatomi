@@ -1,0 +1,11 @@
+#coding: utf-8
+
+<h2>確認画面</h2>
+<p>ご注文内容をご確認ください</p>
+<P>以下の内容でお間違いありませんか</P>
+
+<%= render :partial=>'form_check' %>
+<%= form_for @order do |form| %>
+  <%= render "button_to_create", form: form %>
+  <%= form.submit "予約する" %>
+<% end %>

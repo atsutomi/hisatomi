@@ -1,0 +1,22 @@
+<div id="dishes">
+<h1>料理一覧</h1>
+<p><%= link_to "new", :new_dish %></p>
+<% if @dishes.present? %>
+  <dl class="thumbnail clearfix">
+<% @dishes.each do |dish| %>
+    <div>
+      <dd><%= link_to dish.name, dish %></dd>
+      <dt><%= link_to dish_image_tag_list(dish), dish %></dt>
+      <dd><%= dish.yen %>円</dd>
+      <dd><%= dish.kcal %>Kcal</dd>
+      <dd><%= dish.genra %></dd>
+      <dd><%= dish.category %></dd>
+    </div>
+<% end %>
+  </dl>
+<% else %>
+  <p>料理がありません<p>
+<% end %>
+</div>
+
+

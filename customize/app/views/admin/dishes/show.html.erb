@@ -1,0 +1,21 @@
+<div id="dish">
+  <h1><%= @dish.name %></h1>
+
+  <%= dish_image_tag @dish %>
+  <div id="explanation">
+    <p><%= @dish.name %></p>
+    <p><%= @dish.yen %>円</p>
+    <p><%= @dish.kcal %>Kcal</p>
+    <p><%= @dish.genra %></p>
+    <p><%= @dish.category %></p>
+    <p><%= @dish.visible %></p>
+    <% @dish.foodstuffs.order("recipes.created_at").each do |foodstuff| %>
+    <%= foodstuff.name %>
+    <% end %>
+  </div>
+  <p>
+    <%= link_to "一覧に戻る", :admin_dishes %>
+    <%= link_to "編集", :edit_admin_dish %>
+  </p>
+</div>
+

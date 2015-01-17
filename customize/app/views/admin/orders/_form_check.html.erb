@@ -1,0 +1,69 @@
+<table class="order_show">
+  <tr>
+    <th>受取日時</th>
+    <td><%= @order.receive_date %></td>
+  </tr>
+  <tr>
+    <th>弁当サイズ</th>
+    <td><%= @order.lunchbox.size %></td>
+  </tr>
+  <tr>
+    <th>主食</th>
+    <td>
+      <%= dish_image_tag @staple %>
+      <div id="explanation">
+        <p><%= @staple.name %></p>
+        <p><%= @staple.yen %>円</p>
+        <p><%= @staple.kcal %>Kcal</p>
+        <p><%= @staple.genra %></p>
+        <p><%= @staple.category %></p>
+      </div>
+      </td>
+  </tr>
+  <tr>
+    <th>主菜</th>
+    <td>
+      <%= dish_image_tag @main %>
+      <div id="explanation">
+        <p><%= @main.name %></p>
+        <p><%= @main.yen %>円</p>
+        <p><%= @main.kcal %>Kcal</p>
+        <p><%= @main.genra %></p>
+        <p><%= @main.category %></p>
+      </div>
+      </td>
+  </tr>
+  <tr>
+    <th>副菜</th>
+    <td>
+      <%= dish_image_tag @sub %>
+      <div id="explanation">
+        <p><%= @sub.name %></p>
+        <p><%= @sub.yen %>円</p>
+        <p><%= @sub.kcal %>Kcal</p>
+        <p><%= @sub.genra %></p>
+        <p><%= @sub.category %></p>
+      </div>
+      </td>
+  </tr>
+  <% @sum =((@staple.yen + @main.yen + @sub.yen) * @lunchbox.capacity).to_i %>
+  <tr>
+    <th>小計</th>
+    <td>
+      <%= @sum %>円 &nbsp;&nbsp;|&nbsp;&nbsp;
+      <%= ((@staple.kcal + @main.kcal + @sub.kcal) * @lunchbox.capacity).to_i %>kcal
+    </td>
+  </tr>
+  <tr>
+    <th>個数</th>
+    <td><%= @order.num %></td>
+  </tr>
+  <tr>
+    <th>合計</th>
+    <td><%= @sum * @order.num %>円</td>
+  </tr>
+  <tr>
+    <th>状態</th>
+    <td><%= @order.status %></td>
+  </tr>
+</table>

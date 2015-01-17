@@ -1,0 +1,19 @@
+<div id="dish">
+  <h1><%= @dish.name %></h1>
+
+  <%= image_tag "dish3.jpg" %>
+  <div id="explanation">
+    <p><%= @dish.name %></p>
+    <p><%= @dish.yen %>円</p>
+    <p><%= @dish.kcal %>Kcal</p>
+    <p><%= @dish.genra %></p>
+    <p><%= @dish.category %></p>
+  </div>
+  <p>
+    <%= link_to "一覧に戻る", "index" %>
+    <%= link_to "編集", :edit_dish %>
+    <%= link_to "削除", @dish, method: :delete,
+          confirm: "本当に削除しますか？" %>
+  </p>
+</div>
+

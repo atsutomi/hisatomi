@@ -1,0 +1,25 @@
+<h1>
+  <%= link_to "べんとーべん", root_path %>
+</h1>
+<div id="login_form" >
+  <% if @current_member %>
+    <p class="member">
+      <%= @current_member.name %>さん |
+      <%= link_to "ログアウト", :session, method: :delete, confirm: "ログアウトしますか？"  %>
+          <div id="menubar" class="admin">
+  <%= menu_link_to "予約管理", "#" %> &nbsp;|&nbsp;
+  <%= menu_link_to "在庫管理", "#" %> &nbsp;|&nbsp;
+  <%= menu_link_to "料理管理", "#" %> &nbsp;|&nbsp;
+  <%= menu_link_to "会員管理", "#" %>
+          </div>
+          <div id="menubar" class="nomal user">
+  <%= menu_link_to "予約", "#" %> &nbsp;|&nbsp;
+  <%= menu_link_to "予約履歴", "#" %> &nbsp;|&nbsp;
+  <%= menu_link_to "個人情報", "#" %>  
+          </div>
+    </p>
+
+  <% else %>
+    <%= render "shared/login_form" %>
+  <% end %>
+</div>

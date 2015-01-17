@@ -1,0 +1,36 @@
+// Place all the styles related to the dishes controller here.
+// They will automatically be included in application.css.
+// You can use Sass (SCSS) here: http://sass-lang.com/
+$sidebar_width: 230px;
+
+dl.thumbnail div {
+ float: left;
+ margin: 0 50px 50px 0;
+}
+dl.thumbnail img {
+ border: 2px solid #bbb;
+ width: 120px;
+ height: 90px;
+}
+dl.thumbnail a { display: block; }
+dl.thumbnail dd {
+ text-align: center;
+ margin-left: 0;
+ margin-top: 2px;
+}
+.clearfix:after {
+ content: ".";
+ display: block;
+ height: 10;
+ line-height: 0;
+ clear: both;
+ visibility: hidden;
+}
+.clearfix { display: inline-block; }
+
+/* MacIE用 */
+*+html .clearfix { height: 1%; }
+* html .clearfix { height: 1%; }
+.clearfix { display: block; }
+
+

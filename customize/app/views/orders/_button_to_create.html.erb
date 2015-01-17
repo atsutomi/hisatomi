@@ -1,0 +1,7 @@
+<% [:order_date, :member_id,
+    :receive_date, :lunchbox_id,
+    :staple_id, :main_id, :sub_id,
+    :num, :status].each do |attr| %>
+    <%= form.hidden_field attr %>
+<% end %>
+

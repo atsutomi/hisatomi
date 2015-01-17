@@ -1,0 +1,6 @@
+<h1>在庫管理</h1>
+<p><%= link_to "在庫管理一覧に戻る", [:admin, :stocks] %></p>
+<%= form_for [:admin, @stock], html: {multipart: true} do |form| %>
+<%= render "form", form: form %>
+<p><%= form.submit %></p>
+<% end %>

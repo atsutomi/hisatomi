@@ -1,0 +1,31 @@
+<%= button_to "戻る", :action => "index" %>
+<br/>
+<li>すべての予約</li>
+
+<table class="list">
+  <tr>
+    <td>会員番号</td>
+    <td>受取日時</td>
+    <td>弁当サイズ</td>
+    <td>主食</td>
+    <td>主菜</td>
+    <td>副菜</td>
+    <td>数量</td>
+    <td>状態</td>
+    <td></td>
+  </tr>
+  <% @all_order.zip(@size, @staple, @main, @sub).each do |order,size,staple,main,sub| %>
+  <tr>
+    <td><%= order.member_id %></td>
+    <td><%= link_to order.receive_date.strftime("%Y年%m月%d日 %H:%M:%S"), [:admin, order] %></td>
+    <td><%= size %></td>
+    <td><%= staple %></td>
+    <td><%= main %></td>
+    <td><%= sub %></td>
+    <td><%= order.num %></td>
+    <td><%= order.status %></td>
+    <td><%= link_to "削除", [:admin, order], method: :delete, confirm: "本当に削除しますか?" %></td>
+  </tr>
+  <% end %>
+</table>
+<%= will_paginate @all_order, :previous_label=>'前', :next_label=>'次' %>

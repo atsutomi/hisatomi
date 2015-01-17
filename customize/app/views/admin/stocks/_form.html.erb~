@@ -1,0 +1,14 @@
+<table class="attr">
+  <tr>
+    <th><%= form.label :date %></th>
+    <td><%= form.label @stock.date.try(:strftime, "%Y年%m月%d日") %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :dish %></th>
+    <td><%= form.label Dish.find(@stock.dish_id).name %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :stock %></th>
+    <td><%= form.text_field :stock %></td>
+  </tr>
+</table>

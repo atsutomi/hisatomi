@@ -1,0 +1,26 @@
+<h1>在庫管理だ</h1>
+
+<% if @stocks.present? %>
+　　<% if controller.action_name == "index" %>
+<%= link_to "すべての在庫を確認する", action: :index_all %>
+　　<% end %>
+
+<table class="list">
+  <tr>
+    <th>日付</th>
+    <th>料理名</th>
+    <th>在庫数</th>
+    <th>操作</th>
+  </tr>
+  <% @stocks.each do |stock| %>
+  <tr>
+    <td><%= stock.date.to_date.try(:strftime, "%Y年%m月%d日") %></td>
+    <td><%= Dish.find(stock.dish).name %></td>
+    <td><%= stock.stock %></td>
+    <td><%= button_to "変更", [:edit, :admin, stock], :method => :get %></td>
+  </tr>
+  <% end %>
+</table>
+<% else %>
+<p>在庫情報がありません<p>
+<% end %>

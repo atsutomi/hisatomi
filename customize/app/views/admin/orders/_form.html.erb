@@ -1,0 +1,102 @@
+<table class="order_new" >
+  <% form.label :member_id %>
+  <%= form.hidden_field :member_id %>
+  <% form.label :status %>
+  <%= form.hidden_field :status %>
+  <% form.label :order_date %>
+  <%= form.hidden_field :order_date %>
+  <tr>
+    <th><%= form.label :receive_date, "受取日時" %></th>
+    <td><%= form.datetime_select :receive_date,start_year: Time.now.year, use_month_numbers: true %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :lunchbox_id, "弁当サイズ" %></th>
+    <td>
+      <%= form.select :lunchbox_id, @size %> | &nbsp;
+      大:<%= @explanation[0] %>,&nbsp;&nbsp;
+      普通:<%= @explanation[1] %>,&nbsp;&nbsp;
+      小:<%= @explanation[2] %>
+      </td>
+  </tr>
+  <% @price = 0 %>
+  <% @kcal = 0 %>
+  <tr>
+    <th><%= form.label :staple_id, "主食" %></th>
+    <td>
+      <% if @order.staple_id != nil %>
+        <%= form.hidden_field :staple_id %>
+        <% @staple = Dish.find(cookies[:staple]) %>
+         <%= dish_image_tag @staple %>
+        <div id="explanation">
+         <p><%= @staple.name %></p>
+         <p><%= @staple.yen %>円</p>
+         <% @price += @staple.yen %>
+         <p><%= @staple.kcal %>Kcal</p>
+         <% @kcal += @staple.kcal %>
+         <p><%= @staple.genra %></p>
+        </div>
+        <%= form.button "変更", :name=>"staple"%>
+      <% else %>
+        <%= form.button "選択", :name=>"staple" %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= form.label :main_id, "主菜" %></th>
+    <td>
+      <% if @order.main_id != nil %>
+         <%= form.hidden_field :main_id %>
+         <% @main = Dish.find(cookies[:main]) %>
+         <%= dish_image_tag @main %>
+        <div id="explanation">
+         <p><%= @main.name %></p>
+         <p><%= @main.yen %>円</p>
+         <% @price += @main.yen %>
+         <p><%= @main.kcal %>Kcal</p>
+         <% @kcal += @main.kcal %>
+         <p><%= @main.genra %></p>
+        </div>
+         <%= form.button "変更", :name=>"main"%>
+      <% else %>
+        <%= form.button "選択", :name=>"main" %>
+      <% end %>
+    </td>
+  </tr>
+  <tr>
+    <th><%= form.label :sub_id, "副菜" %></th>
+    <td>
+      <% if @order.sub_id != nil %>
+         <%= form.hidden_field :sub_id %>
+          <% @sub = Dish.find(cookies[:sub]) %>
+         <%= dish_image_tag @sub %>
+        <div id="explanation">
+         <p><%= @sub.name %></p>
+         <p><%= @sub.yen %>円</p>
+         <% @price += @sub.yen %>
+         <p><%= @sub.kcal %>Kcal</p>
+         <% @kcal += @sub.kcal %>
+         <p><%= @sub.genra %></p>
+        </div>
+         <%= form.button "変更", :name=>"sub"%>
+      <% else %>
+        <%= form.button "選択", :name=>"sub" %>
+      <% end %>
+    </td>
+  </tr>
+  
+  <tr>
+    <th>小計</th>
+    <td>
+      <div id="price" data-price="<%= @price %>" >
+      
+      </div>
+      <div id="kcal" data-kcal="<%= @kcal %>" >
+      
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th><%= form.label :num, "個数" %></th>
+    <td><%= form.select :num, (1..3) %></td>
+  </tr>
+</table>

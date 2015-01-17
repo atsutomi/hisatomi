@@ -1,0 +1,47 @@
+<table class="order_new" >
+  <tr>
+    <th><%= form.label :receive_date, "受取日時" %></th>
+    <td><%= form.datetime_select :receive_date,start_year: Time.now.year, use_month_numbers: true %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :lunchbox_id, "弁当サイズ" %></th>
+    <td>
+      <%= form.select :lunchbox_id, @size %> | &nbsp;
+      大:<%= @explanation[0] %>,&nbsp;&nbsp;
+      普通:<%= @explanation[1] %>,&nbsp;&nbsp;
+      小:<%= @explanation[2] %>
+      </td>
+  </tr>
+  <tr>
+    <th><%= form.label :staple_id, "主食" %></th>
+    <% if @order.staple_id != null %>
+      <td><%= @staple.name %></td>
+    <% else %>
+     
+      <td>
+        <%= form.button "選択", :name=>"staple"%>
+      </td>
+    <% end %>
+  </tr>
+  <tr>
+    <th><%= form.label :main_id, "主菜" %></th>
+    <td><%= form.button "選択", :name=>"main" %></td>
+  </tr>
+  <tr>
+    <th><%= form.label :sub_id, "副菜" %></th>
+    <td><%= form.button "選択", :name => "sub" %></td>
+  </tr>
+  <tr>
+    <th>小計</th>
+    <td>900kcal｜600円</td>
+  </tr>
+  <tr>
+    <th><%= form.label :num, "個数" %></th>
+    <td><%= form.select :num, (1..3) %></td>
+  </tr>
+  <tr>
+    <th>合計</th>
+    <td>900kcal｜600円</td>
+  </tr>
+  
+</table>

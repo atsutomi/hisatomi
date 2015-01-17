@@ -1,0 +1,66 @@
+<% @page_title = "予約の詳細" %>
+<br>
+<%= link_to "編集", [:edit, :admin, @order] %>
+
+<table class="attr">
+  <tr>
+    <th width="150">会員番号</th>
+    <td><%= @order.member_id %></td>
+  </tr>
+  <tr>
+    <th>受取日時</th>
+    <td><%= @order.order_date %></td>
+  </tr>
+  <tr>
+    <th>弁当サイズ</th>
+    <td><%= @lunchbox.size %></td>
+  </tr>
+  <tr>
+    <th>主食</th>
+    <td>
+      <%= @staple.name %>
+      <%= @staple.yen %>円
+    </td>
+  </tr>
+  <tr>
+    <th>主菜</th>
+    <td>
+      <%= @main.name %>
+      <%= @main.yen %>円
+    </td>
+  </tr>
+  <tr>
+    <th>副菜</th>
+    <td>
+      <%= @sub.name %>
+      <%= @sub.yen %>円
+    </td>
+  </tr>
+  <tr>
+    <th>数量</th>
+    <td><%= @order.num %></td>
+  </tr>
+  <tr>
+    <th>状態</th>
+    <td><%= @order.status %></td>
+  </tr>
+  <tr>
+    <th>小計</th>
+    <td>
+      <%= @price.to_i %>円 &nbsp;&nbsp;|&nbsp;&nbsp;
+      <%= @kcal.to_i %>kcal
+    </td>
+  </tr>
+  <tr>
+    <th>個数</th>
+    <td><%= @order.num %></td>
+  </tr>
+  <tr>
+    <th>合計</th>
+    <td><%= (@price*@order.num).to_i%>円</td>
+  </tr>
+  <tr>
+    <th>状態</th>
+    <td><%= @order.status %></td>
+  </tr>
+</table>

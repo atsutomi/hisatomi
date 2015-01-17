@@ -1,0 +1,11 @@
+<h1>在庫管理</h1>
+<table class="list">
+  <tr>
+    <th>日付</th>
+  </tr>
+  <% @dates.each do |date| %>
+  <tr>
+    <td><%= link_to date.date.try(:strftime, "%Y年 %m月 %d日") %></td>
+  </tr>
+  <% end %>
+</table>

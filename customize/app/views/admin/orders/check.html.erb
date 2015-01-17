@@ -1,0 +1,11 @@
+#coding: utf-8
+
+<h2>変更確認画面</h2>
+<p>ご注文内容の変更をご確認ください</p>
+<P>以下の内容でお間違いありませんか</P>
+
+<%= render :partial=>'form_check' %>
+<%= form_for [:admin, @order] do |form| %>
+  <%= render "button_to_create", form: form %>
+  <%= form.button "変更", :action => "update" %>
+<% end %>

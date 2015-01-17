@@ -1,0 +1,6 @@
+<h2>新規予約</h2>
+
+<%= form_for [:check ,@order] do |form|%>
+<%= render "form", form: form %>
+<p><%= form.button "確認画面へ", :action=>"check" %></p>
+<% end %>

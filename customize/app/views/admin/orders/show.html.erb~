@@ -1,0 +1,38 @@
+<% @page_title = "予約の詳細" %>
+<br>
+<%= link_to "編集", [:edit, :admin, @order] %>
+
+<table class="attr">
+  <tr>
+    <th width="150">会員番号</th>
+    <td><%= @order.member_id %></td>
+  </tr>
+  <tr>
+    <th>受取日時</th>
+    <td><%= @order.order_date %></td>
+  </tr>
+  <tr>
+    <th>弁当サイズ</th>
+    <td><%= @lunchbox.size %></td>
+  </tr>
+  <tr>
+    <th>主食</th>
+    <td><%= @staple.name %></td>
+  </tr>
+  <tr>
+    <th>主菜</th>
+    <td><%= @main.name %></td>
+  </tr>
+  <tr>
+    <th>副菜</th>
+    <td><%= @sub.name %></td>
+  </tr>
+  <tr>
+    <th>数量</th>
+    <td><%= @order.num %></td>
+  </tr>
+  <tr>
+    <th>状態</th>
+    <td><%= @order.status %></td>
+  </tr>
+</table>

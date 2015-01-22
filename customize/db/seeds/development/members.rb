@@ -8,7 +8,7 @@ gnames = ["太郎", "次郎", "花子"]
     login_id: "#{names[idx]}",
     password: "abc",
     name: "#{fnames[idx % 4]} #{gnames[idx % 3]}",
-    tel: "0123-45-6789",
+    tel: "0123456789",
     email: "#{names[idx]}@example.com",
     admin: (idx == 0)
   )

@@ -1,17 +1,23 @@
 ja:
   activerecord:
     attributes:
-        order:
-                receive_date: 受取日時
-                staple_id: 主食
-                main_id: 主菜
-                sub_id: 副菜
-                num: 個数
-                status: 状態
-            dish:
-                name: 名前
-                kcal: カロリー
-                yen: 値段
-                genra: ジャンル
-                category: カテゴリー
-                staple: 主食
+      order:
+        receive_date: 受取日時
+        staple_id: 主食
+        main_id: 主菜
+        sub_id: 副菜
+        num: 個数
+        status: 状態
+      dish:
+        name: 名前
+        kcal: カロリー
+        yen: 値段
+        genra: ジャンル
+        category: カテゴリー
+        staple: 主食
+        main: 主菜
+        sub: 副菜
+        uploaded image: 画像
+        visible: 表示
+      dish_image:
+        uploaded_image: 画像

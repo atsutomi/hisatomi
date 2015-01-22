@@ -40,9 +40,6 @@ class OrdersController < ApplicationController
     @order = Order.find(params[:id])
   end
 
-  #予約削除
-  def destroy
-  end
 
   #確認画面
   def check

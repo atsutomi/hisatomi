@@ -12,7 +12,7 @@ Customize::Application.routes.draw do
 
   resource :account, only: [:edit, :update]
 
-  resources :orders, except: [:edit, :update] do
+  resources :orders, except: [:edit, :update, :destroy] do
     collection { post "check" }
   end
 
@@ -33,7 +33,7 @@ Customize::Application.routes.draw do
       member { get "order" }
     end
     resources :members, only: [:index, :show]
-    resources :orders, only: [:index, :show, :edit, :update, :destroy] do
+    resources :orders, only: [:index, :show, :edit, :update] do
       collection { post "check" }
       collection { get "all_order" }
     end

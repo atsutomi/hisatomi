@@ -6,5 +6,5 @@ class Order < ActiveRecord::Base
   has_many :customs
   has_many :dishes, through: :customs
 
-  validates :staple_id, :main_id, :sub_id, presence:true
+  validates :receive_date, :staple_id, :main_id, :sub_id, presence:true
 end

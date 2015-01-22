@@ -45,7 +45,11 @@ cal = ->
     amount = rate * num
     red = status - amount
     if red <= 50
-        p_status = document.createTextNode("この日の在庫が少ないため、この予約は仮予約とさせていただきます。")
+        if div_status.getAttribute('data-admin') == "true"
+            
+            p_status = document.createTextNode("この日の在庫が少なくなってきています")
+        else
+            p_status = document.createTextNode("この日の在庫が少ないため、この予約は仮予約とさせていただきます。")
         div_status.appendChild(p_status)
     else if div_status.hasChildNodes()
         div_status.remoceChild(div_status.childNodes[0]);

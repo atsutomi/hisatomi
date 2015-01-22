@@ -41,9 +41,11 @@ class Admin::DishesController < Admin::Base
     @dish = Dish.new(params[:dish])
     @stuffs_id = params[:stuffs]
     @stuff = Array.new
+    if @stuffs_id
     @stuffs_id.each do |stuff_id|
         @stuff = Foodstuff.find(stuff_id)
         @stuff.dishes << @dish
+    end
     end
     if @dish.save
       0.upto(60) do |idx|

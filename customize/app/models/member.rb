@@ -1,10 +1,16 @@
 class Member < ActiveRecord::Base
+  include EmailAddressChecker
   attr_accessible :id, :login_id, :password, :name, :tel, :email, :admin, :password_confirmation, :hashed_password
   attr_accessor :password, :password_confirmation
   has_many :orders
 
   validates :password, presence: { on: :create },
     confirmation: { allow_blank: true}
+  
+  validates :name, length: { minimum:1, maximum: 10 }
+  validates :tel, numericality: { only_integer: true }
+  validates :tel, length: { minimum:10 }
+  validate :check_email
 
   def password=(val)
     if val.present?
@@ -13,6 +19,14 @@ class Member < ActiveRecord::Base
     @password = val
   end
 
+
+private
+  def check_email
+    if email.present?
+      errors.add(:email, :invalid) unless well_formed_as_email_address(email)
+    end
+  end
+  
   class << self
     def search(query)
       rel = order("number")

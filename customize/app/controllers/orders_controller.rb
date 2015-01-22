@@ -38,6 +38,8 @@ class OrdersController < ApplicationController
   #予約履歴詳細
   def show
     @order = Order.find(params[:id])
+    
+    
   end
 
 
@@ -96,6 +98,7 @@ class OrdersController < ApplicationController
       @order = Order.new
       @order.member_id = @current_member.id
       @order.order_date = Date.today
+      @order.receive_date = DateTime.now.strftime("%Y-%m-%d %H:%M")
       @order.status = "本予約"
       session[:order] = @order
     else

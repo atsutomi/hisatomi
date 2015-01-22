@@ -4,7 +4,7 @@ status = ["仮予約", "本予約", "済"]
 
 0.upto(30) do |i|
   @order = Order.create(order_date: Date.today,
-               member_id: i%3,
+               member_id: i%3+1,
                receive_date: DateTime.now + i,
                lunchbox_id: i%3 + 1,
                staple_id: [1,4].sample,

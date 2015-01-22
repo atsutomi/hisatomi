@@ -20,4 +20,8 @@ class Dish < ActiveRecord::Base
       rel
     end
   end
+  
+  validates :name, :kcal, :yen, :genra, presence:true
+  validates :name, length: { minimum:1, maximum: 10 }
+  validates :kcal, :yen, numericality: { only_integer: true }
 end

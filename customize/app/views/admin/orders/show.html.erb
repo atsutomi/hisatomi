@@ -5,7 +5,7 @@
 <table class="attr">
   <tr>
     <th width="150">会員氏名</th>
-    <td><%= @order.id %></td>
+    <td><%= Member.find(@order.member_id).name %></td>
   </tr>
   <tr>
     <th>受取日時</th>

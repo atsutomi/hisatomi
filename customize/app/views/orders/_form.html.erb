@@ -1,3 +1,4 @@
+<%= render "shared/errors", obj: @order %>
 <table class="order_new" >
   <% form.label :member_id %>
   <%= form.hidden_field :member_id %>
@@ -8,7 +9,7 @@
   <tr>
     <th><%= form.label :receive_date, "受取日時" %></th>
     <td>
-      <%= form.text_field :receive_date, :id => "datetimepicker"%>
+      <%= form.text_field :receive_date, :id => "datetimepicker", :readonly => "readonly"%>
       <%= form.button "load" , :name=>"changedate", :style => "visibility:hidden"%>
     </td>
   <% @date=@order.receive_date.to_s.split(" ")[0] %>

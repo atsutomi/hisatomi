@@ -1,5 +1,8 @@
 <h1>予約履歴　詳細</h1>
 
+<% if @notice %>
+  <p><%= @notice %></p>
+<% else %>
 <% @price = 0 %>
 <% @kcal = 0 %>
 <table class="order_show">
@@ -52,3 +55,4 @@
     <td><%= @order.status %></td>
   </tr>
 </table>
+<% end %>

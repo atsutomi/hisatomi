@@ -38,7 +38,9 @@ class OrdersController < ApplicationController
   #予約履歴詳細
   def show
     @order = Order.find(params[:id])
-    
+    if @order.member_id != @current_member.id
+      @notice = "他人の予約を見ることはできません。"
+    end
     
   end
 

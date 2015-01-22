@@ -1,29 +1,35 @@
-<h1>
+<br>
+<div class="logo">
 <% if controller.kind_of?(Admin::Base) %>
-  <%= link_to "べんとーべん", :admin_root %>
+  
+  <%= link_to image_tag("logo.png"), :admin_root %>
 <% else %>
-  <%= link_to "べんとーべん", root_path %>
+  <%= link_to image_tag("logo.png"), root_path %>
 <% end %>
-</h1>
+</div>
 <div id="login_form" >
   <% if @current_member %>
-    <p class="member">
-      <%= @current_member.name %>さん |
-      <%= link_to "ログアウト", :session, method: :delete, confirm: "ログアウトしますか？"  %>
       <% if controller.kind_of?(Admin::Base) %>
-          <div id="menubar" class="admin">
-  <p><%= link_to "予約管理", :admin_orders %> &nbsp;|&nbsp; <%= link_to "在庫管理", :admin_stocks %></p>
-  <p><%= link_to "料理管理", :admin_dishes %> &nbsp;|&nbsp; <%= link_to "会員管理", :admin_members %></p>
+          <div class="admin">
+  <p><%= link_to image_tag("order_manage.png"), :admin_orders %> &nbsp;&nbsp; <%= link_to image_tag("stock_manage.png"), :admin_stocks %></p>
+          </div>
+          <div class="admin">
+  <p><%= link_to image_tag("dish_manage.png"),:top_admin_dishes %> &nbsp;&nbsp; <%= link_to image_tag("member_manage.png"), :admin_members %></p>
           </div>
       <% else %>
-          <div id="menubar" class="nomal user">
-  <p><%= link_to "予約", :new_order %> &nbsp;|&nbsp;<%= link_to "予約履歴", :orders %></p>
-  <p><%= link_to "個人情報", :edit_account %></p>
+          <div id="menubar" class="order">
+  <%= link_to image_tag("order.png"), :new_order %>
+          </div>
+          &nbsp;&nbsp;
+          <div id="menubar" class="others">
+  <p><%= link_to image_tag("history.png"), :orders %></p><p><%= link_to image_tag("edit.png"), :edit_account %></p>
           </div>
       <% end %>
-      <br>
-      <br>
-    </p>
+    <div id="name">
+      <%= @current_member.name %>さん
+      <%= button_to "ログアウト", :session, method: :delete, confirm: "ログアウトしますか？"  %>
+    </div>  
+    
 
   <% else %>
     <%= render "shared/login_form" %>

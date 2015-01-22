@@ -24,11 +24,11 @@ padding: 20px 0 40px 0;
 
 /* ヘッダー */
 div#header {
-  border-top: 4px solid #6bb;
+  border-top: 4px solid #FAB6A2;
   
-  h1{
+  div.logo{
     float: left;
-    width: 50%;
+    width: 40%;
     color:#FF3300;
     font-size: 320%;
   }
@@ -57,17 +57,16 @@ div#footer {
   font: 11px Verdana;
   color: #888;
   padding: 8px 0;
-  border-top: 4px solid #6bb;
+  border-top: 4px solid #FAB6A2;
   text-align: center;
 }
 
 /* メニューバー */
-div.menubar {
+div#menubar {
   padding: 2px;
-  background-color: #000;
-  color: #ccc;
   font-size: 80%;
   padding: 8px 16px;
+  width: 30%
   
   a { text-decoration: none; }
   a:link { color: #ccc; }
@@ -81,6 +80,23 @@ div.menubar {
     font-weight: bold;
   }
 }
+div.order{
+  width: 25%;
+  float: left;
+}
+div.others{
+  width: 25%;
+  float: left;
+}
+div#name{
+  width:30%;
+  float: right;
+}
+
+div.admin{
+  width: 25%;
+  float: left;
+}
 
 div#admin_menubar {
   background-color: #008;
@@ -89,10 +105,10 @@ div#admin_menubar {
 /* メインコンテンツ */
 div#content {
   h1 {
-    color: #88c;
+    color: #FF3300;
     font-weight: normal;
     font-size: 150%;
-    border-bottom: 2px solid #88c;
+    border-bottom: 2px solid #FAB6A2;
     margin-bottom: 0.5em;
   }
   h2 {
@@ -118,9 +134,9 @@ div#content {
 /* サイドバー */
 div#sidebar {
   h2 {
-    color: #080;
+    color: #F80D6B;
     font-weight: bold;
-    border-bottom: 1px dotted #080;
+    border-bottom: 1px dotted #F80D6B;
     margin-bottom: 0.5em;
     font-size: 100%;
   }
@@ -147,15 +163,15 @@ div#sidebar {
   width: 100%;
   
   th {
-    background-color: #499;
-    color: white;
+    background-color: #FCCC66;
+    color: #1A318D;
     font-weight: normal;
   }
   td, th {
     padding: 4px;
   }
   td {
-    background-color: #cee;
+    background-color: #FCCC66;
   }
 }
 
@@ -194,7 +210,9 @@ table.order_new {
     float: left;
   }
 }
-
+table.dish_show{
+  @include data-table;
+}
 /* フラッシュ */
 p.notice {
   border: 1px solid blue;

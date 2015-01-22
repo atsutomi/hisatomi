@@ -1,5 +1,38 @@
 <h2>検索フォーム</h2>
+<% if controller.kind_of?(Admin::Base) %>
+<%= form_tag :search_admin_dishes, method: :get do %>
+<p><%= text_field_tag "q", params[:q] , size: 12 %>
+<%= submit_tag "検索" %></p>
+<% end %>
+
+<h2>マイナス検索フォーム</h2>
+<%= form_tag :search_admin_dishes, method: :get do %>
+<p>
+  <% @f_stuffs = Foodstuff.all%>
+  <% @f_stuffs.each do |stuff|%>
+    <p><label><%= check_box_tag "minus[]", stuff.name %><%=stuff.name%></label></p>
+  <% end %>
+</p>
+
+<%= submit_tag "検索" , :class=>"minus"%>
+<% end %>
+
+<% else %>
 <%= form_tag :search_dishes, method: :get do %>
 <p><%= text_field_tag "q", params[:q] , size: 12 %>
 <%= submit_tag "検索" %></p>
+<% end %>
+
+<h2>マイナス検索フォーム</h2>
+<%= form_tag :search_dishes, method: :get do %>
+<p>
+  <% @f_stuffs = Foodstuff.all%>
+  <% @f_stuffs.each do |stuff|%>
+    <p><label><%= check_box_tag "minus[]", stuff.name %><%=stuff.name%></label></p>
+  <% end %>
+</p>
+
+<%= submit_tag "検索" , :class=>"minus"%>
+
+<% end %>
 <% end %>

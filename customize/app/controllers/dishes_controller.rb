@@ -31,13 +31,27 @@ class DishesController < ApplicationController
   end
 
   def search
-    @dishes = Dish.search(params[:q])
+      @minus = params[:minus]
+      @dishes = Dish.all
+      if @minus
+        @minus.each do |minus|
+          @dishes.delete_if do |dish|
+            @foodstuffs_name = Array.new
+            dish.foodstuffs.each do |foodstuff|
+              @foodstuffs_name.push(foodstuff.name.to_s)
+            end
+            @foodstuffs_name.include?(minus)
+          end
+        end
+      else
+        @dishes = Dish.search(params[:q])
+      end
     render "index"
   end
 
   def order
-    session[session[:status]] = Dish.find(params[:id])
     @dish = Dish.find(params[:id])
+    session[session[:status]] = @dish
     case @dish.category
       when "staple"
         session[:order].staple_id = @dish.id

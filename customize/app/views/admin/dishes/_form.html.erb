@@ -29,6 +29,17 @@
     <td><%= form.select :category, options %></td>
   </tr>
   <tr>
+    <th>食材選択</th>
+    <td>
+<%= form.fields_for :foodstuffs do %>
+  <% @f_stuffs = Foodstuff.all%>
+  <% @f_stuffs.each do |stuff|%>
+    <label><%= check_box_tag "stuffs[]", stuff.id %><%=stuff.name%></label>
+  <% end %>
+<% end %>
+    </td>
+  </tr>
+  <tr>
     <th><%= form.label :visible %></th>
     <td><%= form.check_box :visible %></td>
   </tr>

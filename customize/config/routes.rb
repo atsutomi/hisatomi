@@ -20,7 +20,8 @@ Customize::Application.routes.draw do
 
   namespace :admin do
     root to: "orders#index"
-    put 'orders/:id' => "orders#check"
+    match 'orders/:id/check(.:format)' => "orders#check"
+    put 'orders(/:id)' => 'orders#update'
     resources :reserves, except: [:new, :create]
     resources :stocks, only: [:edit, :update, :index] do
       collection { get "index_all" }
@@ -28,16 +29,18 @@ Customize::Application.routes.draw do
     end
     resources :dishes, except: [:destroy]do
       collection { get "search" }
+      collection { get "top" }
       member { get "order" }
     end
     resources :members, only: [:index, :show]
-    resources :orders, only: [:index, :show, :edit, :destroy] do
+    resources :orders, only: [:index, :show, :edit, :update, :destroy] do
       collection { post "check" }
       collection { get "all_order" }
-      collection { post "update" }
     end
+    
+    
   end
-
+  
   match ':controller(/:action(/:id))(.:format)'
 
 

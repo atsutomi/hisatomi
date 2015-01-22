@@ -15,32 +15,20 @@
     <th>弁当サイズ</th>
     <td><%= @lunchbox.size %></td>
   </tr>
+  <% @price = 0 %>
+  <% @kcal = 0%>
+  <% @order.dishes.each do |dish| %>
   <tr>
-    <th>主食</th>
+    <th><%= dish.category %></th>
     <td>
-      <%= @staple.name %>
-      <%= @staple.yen %>円
+      <%= dish.name %>
+      <%= dish.yen %>円
+      <% @price += dish.yen %>
+      <% @kcal += dish.kcal %>
     </td>
   </tr>
-  <tr>
-    <th>主菜</th>
-    <td>
-      <%= @main.name %>
-      <%= @main.yen %>円
-    </td>
-  </tr>
-  <tr>
-    <th>副菜</th>
-    <td>
-      <%= @sub.name %>
-      <%= @sub.yen %>円
-    </td>
-  </tr>
+<% end %>
 
-  <tr>
-    <th>状態</th>
-    <td><%= @order.status %></td>
-  </tr>
   <tr>
     <th>小計</th>
     <td>
@@ -54,7 +42,7 @@
   </tr>
   <tr>
     <th>合計</th>
-    <td><%= (@price*@order.num).to_i%>円</td>
+    <td><%= (@price * @order.num).to_i%>円</td>
   </tr>
   <tr>
     <th>状態</th>

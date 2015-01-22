@@ -5,7 +5,7 @@
 <P>以下の内容でお間違いありませんか</P>
 
 <%= render :partial=>'form_check' %>
-<%= form_for [:admin, @order] do |form| %>
+<%= form_for @order, url: {action: "update"} do |form| %>
   <%= render "button_to_create", form: form %>
-  <%= form.button "変更", :action => "update" %>
+  <%= form.submit "変更", :action => "update"%>
 <% end %>

@@ -75,9 +75,9 @@ class Admin::OrdersController < Admin::Base
 
   def show
     @order = Order.find(params[:id])
-    cookies[:staple] = Order.find(params[:id]).staple_id
-    cookies[:main] = Order.find(params[:id]).main_id
-    cookies[:sub] = Order.find(params[:id]).sub_id
+    session[:staple] = Order.find(params[:id]).staple_id
+    session[:main] = Order.find(params[:id]).main_id
+    session[:sub] = Order.find(params[:id]).sub_id
     @price = 0
     @kcal = 0
     @staple = Dish.find(@order.staple_id)
@@ -96,7 +96,14 @@ class Admin::OrdersController < Admin::Base
   end
 
   def edit
-    @order = Order.find(params[:id])
+    if params[:name] == "select"
+      @order = session[:order]
+    else
+      @order = Order.find(params[:id])
+      session[:old_order] = @order
+      session[:order_id] = @order.id
+    end
+    
     @lunchboxes = Lunchbox.all
     @size = Array.new
     @explanation = Array.new
@@ -107,9 +114,13 @@ class Admin::OrdersController < Admin::Base
   end
 
   def check
-    @order = Order.new(params[:order])
-    session[:order]= @order
-    if params[:staple]
+    @order = Order.find(params[:id])
+    @order.assign_attributes(params[:order])
+    session[:order] = @order
+    if params[:changedate]
+      collect_info
+      render "edit"
+    elsif params[:staple]
       session[:status] = :staple
       redirect_to :controller=>"dishes", :action=>"index"
     elsif params[:main]
@@ -122,8 +133,8 @@ class Admin::OrdersController < Admin::Base
      if @order.valid?
        @lunchbox = Lunchbox.find(@order.lunchbox_id)
        @staple = Dish.find(@order.staple_id)
-       @main = Dish.find(cookies[:main])
-       @sub = Dish.find(cookies[:sub])
+       @main = Dish.find(@order.main_id)
+       @sub = Dish.find(@order.sub_id)
        @price = (@staple.yen + @main.yen + @sub.yen) * @lunchbox.capacity
        @kcal = (@staple.kcal + @main.kcal + @sub.kcal) * @lunchbox.capacity
        @sum = @price * @order.num
@@ -135,18 +146,52 @@ class Admin::OrdersController < Admin::Base
   end
 
   def update
-    @order = Order.find(params[:id])
+    @order = Order.find(session[:order_id])
     @order.assign_attributes(params[:order])
-    if @order_up.save
-      redirect_to [:admin, @order], notice: "予約情報を更新しました。"
-    else
-      render  :action => "edit"
+    @order.save
+        
+    @lunchbox = Lunchbox.find(@order.lunchbox_id)
+    @order.lunchbox = @lunchbox
+
+    @old_date = session[:old_order].receive_date.to_s.split(" ")[0]
+    session[:order].dishes.each do |dish|
+      @stock = Stock.where(dish_id: "#{dish.id}", date: "#{@old_date}")
+      @stock[0].stock = @stock[0].stock + @order.lunchbox.capacity * @order.num
+      @stock[0].save
     end
+    Custom.destroy_all(order_id: @order.id)
+    select3 = [@order.staple_id, @order.main_id, @order.sub_id]
+    select3.each do |sel|
+      dishes = Dish.find(sel)
+      dishes.orders << @order
+    end
+    
+    session.delete(:order)
+    session.delete(:status)
+    
+    @date=@order.receive_date.to_s.split(" ")[0]
+    @order.dishes.each do |dish|
+      @stock = Stock.where(dish_id: "#{dish.id}", date: "#{@date}")
+      @stock[0].stock = @stock[0].stock - @order.lunchbox.capacity * @order.num
+      @stock[0].save
+    end
+    render :action => "update", notice: "予約情報を更新しました。"
   end
 
   def destroy
     @order = Order.find(params[:id])
     @order.destroy
     redirect_to :admin_orders, notice: "予約情報を削除しました。"
+  end
+  
+  private
+  def collect_info
+    @lunchboxes = Lunchbox.all
+    @size = Array.new
+    @explanation = Array.new
+    @lunchboxes.each do |lunchbox|
+      @size.push([lunchbox.size, lunchbox.id])
+      @explanation.push(lunchbox.explanation)
+    end
   end
 end

@@ -9,8 +9,21 @@ class Admin::DishesController < Admin::Base
     end
   end
 
+  def top
+    session.delete(:status)
+    session.delete(:order)
+    session.delete(:order_id)
+    session.delete(:old_order)
+    @dishes = Dish.all
+    if(session[:status] != nil)
+      @dishes = Dish.where(category: session[:status])
+    else
+      @dishes = Dish.all
+    end
+    render "index"
+  end
+
   def show
-    cookies[:dish] = params[:id]
     @dish = Dish.find(params[:id])
     if params[:format].in?(["jpg", "png", "gif"])
       send_image
@@ -26,6 +39,12 @@ class Admin::DishesController < Admin::Base
 
   def create
     @dish = Dish.new(params[:dish])
+    @stuffs_id = params[:stuffs]
+    @stuff = Array.new
+    @stuffs_id.each do |stuff_id|
+        @stuff = Foodstuff.find(stuff_id)
+        @stuff.dishes << @dish
+    end
     if @dish.save
       0.upto(60) do |idx|
         Stock.create(
@@ -57,21 +76,35 @@ class Admin::DishesController < Admin::Base
   end
 
   def search
-    @dishes = Dish.search(params[:q])
+      @minus = params[:minus]
+      @dishes = Dish.all
+      if @minus
+        @minus.each do |minus|
+          @dishes.delete_if do |dish|
+            @foodstuffs_name = Array.new
+            dish.foodstuffs.each do |foodstuff|
+              @foodstuffs_name.push(foodstuff.name.to_s)
+            end
+            @foodstuffs_name.include?(minus)
+          end
+        end
+      else
+        @dishes = Dish.search(params[:q])
+      end
     render "index"
   end
 
   def order
-    @dish = Dish.find(cookies[:dish])
+    @dish = Dish.find(params[:id])
     case @dish.category
       when "staple"
-        cookies[:staple] = @dish.id
+        session[:order].staple_id = @dish.id
       when "main"
-        cookies[:main] = @dish.id
+        session[:order].main_id = @dish.id
       when "sub"
-        cookies[:sub] = @dish.id
+        session[:order].sub_id = @dish.id
     end
-    redirect_to :controller =>"orders", :action =>"edit" 
+    redirect_to :controller =>"orders", :action =>"edit" , :name=>"select"
   end
 
   private

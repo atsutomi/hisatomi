@@ -1,10 +1,20 @@
 $(document).ready ->
     changelunchbox()
     changenum()
-    chnagedate()
+    datetimepicker()
     cal()
     return
-    
+
+
+datetimepicker = ->
+    $('#datetimepicker').datetimepicker({
+        format: 'Y-m-d H:i',
+        onChangeDateTime: reload,
+        step: 10,
+        minDate: '+1d'
+        
+    })
+    return
 
 cal = ->
     selected = document.getElementById("order_lunchbox_id")
@@ -39,8 +49,6 @@ cal = ->
         div_status.appendChild(p_status)
     else if div_status.hasChildNodes()
         div_status.remoceChild(div_status.childNodes[0]);
-    alert(status)
-    alert(red)
     return
 
 reload = ->
@@ -59,10 +67,7 @@ changenum = ->
     return
 
 chnagedate = ->
-    year = document.getElementById("order_receive_date_1i")
-    month = document.getElementById("order_receive_date_2i")
-    date = document.getElementById("order_receive_date_3i")
-    year.addEventListener('change', reload, false)
-    month.addEventListener('change', reload, false)
-    date.addEventListener('change', reload, false)
+    datetimepicker = document.getElementById("datetimepicker")
+    datetimepicker.addEventListener('onChange', reload, false)
+    return
     

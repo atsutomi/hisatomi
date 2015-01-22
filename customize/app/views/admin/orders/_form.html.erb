@@ -7,7 +7,11 @@
   <%= form.hidden_field :order_date %>
   <tr>
     <th><%= form.label :receive_date, "受取日時" %></th>
-    <td><%= form.datetime_select :receive_date,start_year: Time.now.year, use_month_numbers: true %></td>
+    <td>
+      <%= form.text_field :receive_date, :id => "datetimepicker"%>
+      <%= form.button "load" , :name=>"changedate", :style => "visibility:hidden"%>
+    </td>
+  <% @date=@order.receive_date.to_s.split(" ")[0] %>
   </tr>
   <tr>
     <th><%= form.label :lunchbox_id, "弁当サイズ" %></th>
@@ -20,67 +24,62 @@
   </tr>
   <% @price = 0 %>
   <% @kcal = 0 %>
+  <% @max = 10000 %>
   <tr>
     <th><%= form.label :staple_id, "主食" %></th>
     <td>
-      <% if @order.staple_id != nil %>
-        <%= form.hidden_field :staple_id %>
-        <% @staple = Dish.find(cookies[:staple]) %>
-         <%= dish_image_tag @staple %>
-        <div id="explanation">
-         <p><%= @staple.name %></p>
-         <p><%= @staple.yen %>円</p>
-         <% @price += @staple.yen %>
-         <p><%= @staple.kcal %>Kcal</p>
-         <% @kcal += @staple.kcal %>
-         <p><%= @staple.genra %></p>
-        </div>
-        <%= form.button "変更", :name=>"staple"%>
-      <% else %>
-        <%= form.button "選択", :name=>"staple" %>
-      <% end %>
+      <%= form.hidden_field :staple_id %>
+      <% @staple_stock = Stock.where(dish_id: "#{@order.staple_id}", date: "#{@date}") %>
+      <% @max = @staple_stock[0].stock    if @max > @staple_stock[0].stock %>
+      <% @staple = Dish.find(@order.staple_id) %>
+      <%= dish_image_tag @staple %>
+      <div id="explanation">
+        <p><%= @staple.name %></p>
+        <p><%= @staple.yen %>円</p>
+        <% @price += @staple.yen %>
+        <p><%= @staple.kcal %>Kcal</p>
+        <% @kcal += @staple.kcal %>
+        <p><%= @staple.genra %></p>
+      </div>
+      <%= form.button "変更", :name=>"staple"%>
     </td>
   </tr>
   <tr>
     <th><%= form.label :main_id, "主菜" %></th>
     <td>
-      <% if @order.main_id != nil %>
-         <%= form.hidden_field :main_id %>
-         <% @main = Dish.find(cookies[:main]) %>
-         <%= dish_image_tag @main %>
-        <div id="explanation">
+      <%= form.hidden_field :main_id %>
+      <% @main_stock =Stock.where(dish_id: "#{@order.main_id}", date: "#{@date}") %>
+      <% @max = @main_stock[0].stock if @max > @main_stock[0].stock %>
+      <% @main = Dish.find(@order.main_id) %>
+      <%= dish_image_tag @main %>
+      <div id="explanation">
          <p><%= @main.name %></p>
          <p><%= @main.yen %>円</p>
          <% @price += @main.yen %>
          <p><%= @main.kcal %>Kcal</p>
          <% @kcal += @main.kcal %>
-         <p><%= @main.genra %></p>
-        </div>
-         <%= form.button "変更", :name=>"main"%>
-      <% else %>
-        <%= form.button "選択", :name=>"main" %>
-      <% end %>
+      <p><%= @main.genra %></p>
+      </div>
+      <%= form.button "変更", :name=>"main"%>
     </td>
   </tr>
   <tr>
     <th><%= form.label :sub_id, "副菜" %></th>
     <td>
-      <% if @order.sub_id != nil %>
-         <%= form.hidden_field :sub_id %>
-          <% @sub = Dish.find(cookies[:sub]) %>
-         <%= dish_image_tag @sub %>
-        <div id="explanation">
+      <%= form.hidden_field :sub_id %>
+      <% @sub_stock =Stock.where(dish_id: "#{@order.sub_id}", date: "#{@date}") %>
+      <% @max = @sub_stock[0].stock if @max > @sub_stock[0].stock %>
+      <% @sub = Dish.find(@order.sub_id) %>
+      <%= dish_image_tag @sub %>
+      <div id="explanation">
          <p><%= @sub.name %></p>
          <p><%= @sub.yen %>円</p>
          <% @price += @sub.yen %>
          <p><%= @sub.kcal %>Kcal</p>
          <% @kcal += @sub.kcal %>
          <p><%= @sub.genra %></p>
-        </div>
-         <%= form.button "変更", :name=>"sub"%>
-      <% else %>
-        <%= form.button "選択", :name=>"sub" %>
-      <% end %>
+      </div>
+      <%= form.button "変更", :name=>"sub"%>
     </td>
   </tr>
   
@@ -97,6 +96,20 @@
   </tr>
   <tr>
     <th><%= form.label :num, "個数" %></th>
-    <td><%= form.select :num, (1..3) %></td>
+    <td>
+      <div><%= form.select :num, (1..10) %></div>
+      <div id="status" data-status="<%= @max %>" >
+        
+      </div>
+    </td>
+  </tr>
+  <tr>
+    <th><%= form.label :status, "予約状態" %></th>
+    <td>
+      <label><%= form.radio_button :status , "本予約" %>本予約</label>&nbsp;&nbsp;
+      <label><%= form.radio_button :status , "仮予約" %>仮予約</label> &nbsp;&nbsp;
+      <label><%= form.radio_button :status , "済" %>済</label> &nbsp;&nbsp;
+      <label><%= form.radio_button :status ,"キャンセル" %>キャンセル</label>
+    </td>
   </tr>
 </table>

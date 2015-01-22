@@ -3,21 +3,46 @@
 
   <%= dish_image_tag @dish %>
   <div id="explanation">
-    <p><%= @dish.name %></p>
-    <p><%= @dish.yen %>円</p>
-    <p><%= @dish.kcal %>Kcal</p>
-    <p><%= @dish.genra %></p>
-    <p><%= @dish.category %></p>
-    <% @dish.foodstuffs.order("recipes.created_at").each do |foodstuff| %>
-    <%= foodstuff.name %>
-    <% end %>
+    <table class="dish_show">
+      <tr>
+	<th><%= :name %></th>
+	<td><%= @dish.name %></td>
+      </tr>
+      <tr>
+	<th><%= :yen %></th>
+	<td><%= @dish.yen %>円</td>
+      </tr>
+      <tr>
+	<th><%= :kcal %></th>
+	<td><%= @dish.kcal %>Kcal</td>
+      </tr>
+      <tr>
+	<th><%= :genra %></th>
+	<td><%= @dish.genra %></td>
+      </tr>
+      <tr>
+	<th><%= :category %></th>
+	<td><%= @dish.category %></td>
+      </tr>
+      <tr>
+	<th><%= :foodstuffs %></th>
+	  <td>
+	  <% @dish.foodstuffs.order("recipes.created_at").each do |foodstuff| %>
+            <%= foodstuff.name %>
+	  <% end %>
+	  </td>
+      </tr>
+    </table>
   </div>
   <p>
     <%= link_to "一覧に戻る", :dishes %>
-
+</div>
   </p>
   <% if session[:order].present? %>
-  <p><%= link_to "選択", :action=>"order" %></p>
-  <% end %>
-</div>
+<p>こちらの料理でよろしいですか?</p>
+<p>よろしければ下の選択ボタンを押してください。</p>
+<%= link_to image_tag("select.png"), :action=>"order" %>
+  </div>
+<% end %>
+
 
